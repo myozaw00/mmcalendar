@@ -10,7 +10,7 @@ class DateFormatDayFormatter: DayFormatter {
     private lateinit var dateFormat: DateTimeFormatter
 
     constructor() {
-        dateFormat = DateTimeFormatter.ofPattern(DEFAULT_FORMAT, Locale.getDefault())
+        dateFormat = DateTimeFormatter.ofPattern(DayFormatter.DEFAULT_FORMAT, Locale.getDefault())
     }
 
     constructor(dateFormat: DateTimeFormatter) {
