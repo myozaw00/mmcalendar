@@ -1,0 +1,2 @@
+include ':app', ':mmcalendar'
+rootProject.name='MM Calendar'
