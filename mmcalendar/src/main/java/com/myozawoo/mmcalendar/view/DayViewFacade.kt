@@ -82,6 +82,8 @@ class DayViewFacade {
 
     fun getSpans(): List<Span> = Collections.unmodifiableList(spans)
 
+    fun areDaysDisabled(): Boolean = daysDisabled
+
     class Span(span: Any)
 
 }

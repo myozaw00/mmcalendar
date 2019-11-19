@@ -1,2 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.myozawoo.mmcalendar" />
+    package="com.myozawoo.mmcalendar" >
+
+    <application>
+        <provider
+            android:name=".CalendarViewInitProvider"
+            android:authorities="${applicationId}.calendarviewinitprovider"
+            android:enabled="true"
+            android:exported="false"
+            />
+    </application>
+
+</manifest>
