@@ -27,6 +27,10 @@ class CalendarDay : Parcelable {
             return from(LocalDate.now())!!
         }
 
+        fun currentMonth(): CalendarDay {
+            return from(LocalDate.now().year, LocalDate.now().monthValue, 1)
+        }
+
         fun from(year: Int, month: Int, day: Int): CalendarDay {
             return CalendarDay(year, month, day)
         }
@@ -57,6 +61,7 @@ class CalendarDay : Parcelable {
     fun getDay(): Int = date.dayOfMonth
 
     fun getDate(): LocalDate = date
+
 
     /**
      * Determine if this day is within a specified range

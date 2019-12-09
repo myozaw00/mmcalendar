@@ -27,7 +27,7 @@ class DateFormatDayFormatter
     /**
      * {@inheritDoc}
      */
-    override fun format(day: CalendarDay): String {
+    override fun format(day: CalendarDay): DayInfo {
         /**
          * 0 - La San
          * 1 - La Pyae
@@ -35,18 +35,13 @@ class DateFormatDayFormatter
          * 3 - La Kwel
          */
         val mmDate = MyanmarDateConverter.convert(day.getYear(), day.getMonth(), day.getDay())
-        showLog(mmDate.toString())
-        showLog("${day.getYear()}-${day.getMonth()}-${day.getDay()}")
-        var date = dateFormat.format(day.getDate())
-        date += "\n${mmDate.fortnightDay}"
-        if (mmDate.fortnightDayInt == 1) {
-            date += "\n${mmDate.moonPhase}"
-        }
+        val moonPhase = if (mmDate.fortnightDay == "၁" || mmDate.fortnightDay == "") {
+            "${mmDate.monthName}\n${mmDate.moonPhase}"
+        }else ""
 
-        if (mmDate.moonPhrase == 1 || mmDate.moonPhrase == 3) {
-            date += "\n${mmDate.moonPhase}"
-        }
-        return date
+        return DayInfo(moonPhase = moonPhase,
+            burmeseDay = mmDate.fortnightDay,
+            westernDay = dateFormat.format(day.getDate()))
     }
 
     private fun showLog(message: String) {

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="@dimen/_2sdp">
+
+    <TextView
+        android:id="@+id/tvBurmeseDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        tools:text="၁"
+        android:textColor="@color/colorBlue"
+        android:textSize="@dimen/_12sdp"/>
+
+    <TextView
+        android:id="@+id/tvWesternDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="12"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/colorBlue"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvMoonphase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="နတ်တော်လပြည့်ကျေ"
+        android:textColor="@color/colorRed"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:textSize="@dimen/_8sdp"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/tvBurmeseDay"/>
+
+</RelativeLayout>

@@ -11,7 +11,7 @@ interface DayFormatter {
      * @param day the day
      * @return a label for the day
      */
-    fun format(day: CalendarDay): String
+    fun format(day: CalendarDay): DayInfo
 
     companion object {
 

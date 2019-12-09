@@ -2,7 +2,9 @@ package com.myozawoo.mmcalendar.view
 
 import android.content.Context
 import android.util.Log
+import android.view.View
 import com.myozawoo.mmcalendar.CalendarDay
+import com.myozawoo.mmcalendar.R
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.WeekFields
@@ -21,6 +23,10 @@ class MonthView (context: Context,
                 temp = temp.plusDays(1)
             }
         }
+    }
+
+    override fun isDayEnabled(day: CalendarDay): Boolean {
+        return day.getMonth() == getFirstViewDay().getMonth()
     }
 
     override fun getRows(): Int {

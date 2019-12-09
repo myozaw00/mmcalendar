@@ -13,14 +13,19 @@ import com.myozawoo.mmcalendar.CalendarDay
 import com.myozawoo.mmcalendar.format.DayFormatter
 import android.text.Spanned
 import android.text.SpannableString
+import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
+import com.myozawoo.mmcalendar.R
 import com.myozawoo.mmcalendar.format.DateFormatDayFormatter
-
+import com.myozawoo.mmcalendar.format.DayInfo
+import kotlinx.android.synthetic.main.item_day_view.view.*
 
 
 class DayView(context: Context,
-              calendarDay: CalendarDay) : AppCompatCheckedTextView(context) {
+              calendarDay: CalendarDay) : RelativeLayout(context) {
 
     private var date: CalendarDay = calendarDay
     private var selectionColor = Color.GRAY
@@ -56,21 +61,29 @@ class DayView(context: Context,
     }
 
     init {
+        inflate(context, R.layout.item_day_view, this)
         formatter =  DateFormatDayFormatter()
         contentDescriptionFormatter = formatter
         fadeTime = resources.getInteger(android.R.integer.config_shortAnimTime)
         setSelectionColor(this.selectionColor)
+        setCustomBackground(ContextCompat.getDrawable(context, R.drawable.rounded_grey_border))
         gravity = Gravity.CENTER
         textAlignment = View.TEXT_ALIGNMENT_CENTER
         setDay(date)
-        text = getLabel()
+        setText(getLabel())
 
+    }
+
+    private fun setText(dayInfo: DayInfo) {
+        tvBurmeseDay.text = dayInfo.burmeseDay
+        tvMoonphase.text = dayInfo.moonPhase
+        tvWesternDay.text = dayInfo.westernDay
     }
 
 
     fun setDay(date: CalendarDay) {
         this.date = date
-        text = getLabel()
+        setText(getLabel())
     }
 
     fun setDayFormatter(formatter: DateFormatDayFormatter) {
@@ -78,23 +91,23 @@ class DayView(context: Context,
             formatter
         else contentDescriptionFormatter
         this.formatter = formatter
-        val currentLabel = text
-        var spans: Array<Any>? = null
-        if (currentLabel is Spanned) {
-            spans = currentLabel.getSpans(0, currentLabel.length, Any::class.java)
-        }
-        val newLabel = SpannableString(getLabel())
-        spans?.forEach {
-            newLabel.setSpan(it, 0, newLabel.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        }
-        text = newLabel
+//        val currentLabel = getLabel()
+//        var spans: Array<Any>? = null
+//        if (currentLabel is Spanned) {
+//            spans = currentLabel.getSpans(0, currentLabel.length, Any::class.java)
+//        }
+//        val newLabel = SpannableString(getLabel())
+//        spans?.forEach {
+//            newLabel.setSpan(it, 0, newLabel.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//        }
+        //text = newLabel
     }
 
-    fun getLabel(): String {
+    fun getLabel(): DayInfo {
         return formatter.format(date)
     }
 
-    fun getContentDescriptionLabel(): String {
+    fun getContentDescriptionLabel(): DayInfo {
         return contentDescriptionFormatter.format(date)
     }
 
@@ -139,13 +152,19 @@ class DayView(context: Context,
         if (!isInRange && showOutOfRange) {
             shouldBeVisible = shouldBeVisible or isInMoth
         }
-
-        if (!isInMoth && shouldBeVisible) {
-            setTextColor(textColors.getColorForState(
-                intArrayOf(android.R.attr.state_enabled), Color.GRAY
-            ))
+        showLog("ShouldBeVisible: $shouldBeVisible")
+        showLog("Not in Month ${getLabel().toString()}")
+        showLog("IsInMonth: $isInMoth")
+        if (!isInMoth) {
+            showLog("Not in Month ${getLabel().toString()}")
+            tvMoonphase.setTextColor(Color.GRAY)
+            tvBurmeseDay.setTextColor(Color.GRAY)
+            tvWesternDay.setTextColor(Color.GRAY)
+//            tvMoonphase.setTextColor(tvMoonphase.textColors.getColorForState(
+//                intArrayOf(android.R.attr.state_enabled), Color.GRAY
+//            ))
         }
-        visibility = if (shouldBeVisible) View.VISIBLE else View.INVISIBLE
+        //visibility = if (shouldBeVisible) View.VISIBLE else View.INVISIBLE
     }
 
     internal fun setupSelection(inRange: Boolean,
@@ -164,13 +183,13 @@ class DayView(context: Context,
         val spans = facade.getSpans()
         if (spans.isNotEmpty()) {
             val label = getLabel()
-            val formattedLabel = SpannableString(getLabel())
+           // val formattedLabel = SpannableString(getLabel())
             spans.forEach {
-                formattedLabel.setSpan(it, 0, label.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+         //       formattedLabel.setSpan(it, 0, label.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
-            text = formattedLabel
+           // text = formattedLabel
         }else {
-            text = getLabel()
+            //text = getLabel()
         }
     }
 
@@ -187,6 +206,7 @@ class DayView(context: Context,
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
+//        tempRect.set(left, top, right, bottom)
         calculateBounds(right-left, bottom-top)
         regenerateBackground()
     }
@@ -199,9 +219,13 @@ class DayView(context: Context,
             tempRect.set(offset, 0, radius+offset, height)
             circleDrawableRect.set(circleOffset, 0, radius+circleOffset, height)
         }else {
-            tempRect.set(0, offset, width, radius+offset)
+            tempRect.set(0, -1, width, radius+offset)
             circleDrawableRect.set(0, circleOffset, width, radius + circleOffset)
         }
+    }
+
+    private fun showLog(message: String) {
+        Log.d(javaClass.simpleName, message)
     }
 
 }

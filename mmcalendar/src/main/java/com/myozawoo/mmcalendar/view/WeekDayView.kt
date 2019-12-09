@@ -1,6 +1,7 @@
 package com.myozawoo.mmcalendar.view
 
 import android.content.Context
+import android.graphics.Color
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
@@ -14,6 +15,7 @@ class WeekDayView (context: Context,
         gravity = Gravity.CENTER
         textAlignment = View.TEXT_ALIGNMENT_CENTER
         setDayOfWeek(dayOfWeek)
+        setTextColor(Color.WHITE)
     }
 
     fun setWeekDayFormatter(formatter: WeekDayFormatter) {

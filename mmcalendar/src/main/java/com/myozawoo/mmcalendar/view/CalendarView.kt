@@ -1,6 +1,7 @@
 package com.myozawoo.mmcalendar.view
 
 import android.content.Context
+import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import com.myozawoo.mmcalendar.CalendarDay
@@ -9,8 +10,11 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.WeekFields
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import com.myozawoo.mmcalendar.R
 import com.myozawoo.mmcalendar.format.WeekDayFormatter
 import com.myozawoo.mmcalendar.format.DateFormatDayFormatter
 
@@ -42,10 +46,12 @@ abstract class CalendarView(context: Context,
         for (i in 0 until DEFAULT_DAYS_IN_WEEK) {
             val weekDayView = WeekDayView(context, local.dayOfWeek)
             weekDayView.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+            weekDayView.setBackgroundColor(Color.parseColor("#154FCD"))
             weekDayViews.add(weekDayView)
             addView(weekDayView)
             local = local.plusDays(1)
         }
+        //setMinimumDate(firstViewDay)
     }
 
     fun setDayViewDecorators(result: List<DecoratorResult>) {
@@ -76,9 +82,9 @@ abstract class CalendarView(context: Context,
     fun setDateTextAppearance(taId: Int) {
         dayViews.forEach {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                it.setTextAppearance(taId)
+                //it.setTextAppearance(taId)
             }else {
-                it.setTextAppearance(context, taId)
+                //it.setTextAppearance(context, taId)
             }
         }
     }
@@ -116,7 +122,7 @@ abstract class CalendarView(context: Context,
 
     private fun setSelectedDates(dates: List<CalendarDay>) {
         dayViews.forEach {
-            it.isChecked = dates.contains(it.getDate())
+            //it.isChecked = dates.contains(it.getDate())
         }
         postInvalidate()
     }
@@ -124,10 +130,13 @@ abstract class CalendarView(context: Context,
     private fun updateUi() {
         dayViews.forEach {
             val day = it.getDate()
-            it.setupSelection(day.isInRange(minDate, maxDate), true)
+            showLog("isInRange: ${day.isInRange(minDate, maxDate)}")
+            it.setupSelection(day.isInRange(minDate, maxDate), isDayEnabled(day))
         }
         postInvalidate()
     }
+
+    abstract fun isDayEnabled(day: CalendarDay): Boolean
 
     private fun invalidateDecorators() {
         val facadeAccumulator = DayViewFacade()
@@ -190,7 +199,7 @@ abstract class CalendarView(context: Context,
         }
 
         val measureTileWidth = specWidthSize / DEFAULT_DAYS_IN_WEEK
-        val measureTileHeight = specHeightSize /getRows()
+        val measureTileHeight = (specHeightSize/2) /getRows()
         setMeasuredDimension(specWidthSize, specHeightSize)
         val count = childCount
         for (i in 0 until count) {
@@ -260,6 +269,9 @@ abstract class CalendarView(context: Context,
         info?.className = CalendarView::class.java.name
     }
 
+    private fun showLog(message: String) {
+        Log.d(javaClass.simpleName, message)
+    }
 
 
 }
