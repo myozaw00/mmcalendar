@@ -18,7 +18,7 @@ class MonthView (context: Context,
         var temp = calendar
         for (r in 0 until DEFAULT_MAX_WEEK) {
             for (i in 0 until DEFAULT_DAYS_IN_WEEK) {
-                addDayView(dayViews, temp)
+                addDayView(dayViews, temp, i == 0 || i == 6)
                 showLog(temp.toString())
                 temp = temp.plusDays(1)
             }

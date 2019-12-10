@@ -25,7 +25,8 @@ import kotlinx.android.synthetic.main.item_day_view.view.*
 
 
 class DayView(context: Context,
-              calendarDay: CalendarDay) : RelativeLayout(context) {
+              calendarDay: CalendarDay,
+              isHoliday: Boolean) : RelativeLayout(context) {
 
     private var date: CalendarDay = calendarDay
     private var selectionColor = Color.GRAY
@@ -71,6 +72,11 @@ class DayView(context: Context,
         textAlignment = View.TEXT_ALIGNMENT_CENTER
         setDay(date)
         setText(getLabel())
+        if (isHoliday) {
+            tvMoonphase.setTextColor(Color.RED)
+            tvBurmeseDay.setTextColor(Color.RED)
+            tvWesternDay.setTextColor(Color.RED)
+        }
 
     }
 
@@ -156,7 +162,6 @@ class DayView(context: Context,
         showLog("Not in Month ${getLabel().toString()}")
         showLog("IsInMonth: $isInMoth")
         if (!isInMoth) {
-            showLog("Not in Month ${getLabel().toString()}")
             tvMoonphase.setTextColor(Color.GRAY)
             tvBurmeseDay.setTextColor(Color.GRAY)
             tvWesternDay.setTextColor(Color.GRAY)

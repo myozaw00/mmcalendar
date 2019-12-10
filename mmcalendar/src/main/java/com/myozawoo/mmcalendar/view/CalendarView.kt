@@ -60,9 +60,9 @@ abstract class CalendarView(context: Context,
         invalidateDecorators()
     }
 
-    fun addDayView(views: Collection<DayView>, temp: LocalDate) {
+    fun addDayView(views: Collection<DayView>, temp: LocalDate, isHoliday: Boolean) {
         val day = CalendarDay.from(temp)
-        val dayView = DayView(context, day!!)
+        val dayView = DayView(context, day!!, isHoliday)
         dayView.setOnClickListener(this)
         dayView.setOnLongClickListener(this)
         dayViews.add(dayView)
