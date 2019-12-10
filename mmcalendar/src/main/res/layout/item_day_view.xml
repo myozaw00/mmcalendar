@@ -23,6 +23,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:textSize="@dimen/_15sdp"
+        android:padding="@dimen/_2sdp"
         android:textColor="@color/colorBlue"
         android:textStyle="bold"/>
 

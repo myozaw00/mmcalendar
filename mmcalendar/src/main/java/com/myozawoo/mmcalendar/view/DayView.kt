@@ -22,6 +22,7 @@ import com.myozawoo.mmcalendar.R
 import com.myozawoo.mmcalendar.format.DateFormatDayFormatter
 import com.myozawoo.mmcalendar.format.DayInfo
 import kotlinx.android.synthetic.main.item_day_view.view.*
+import org.threeten.bp.LocalDate
 
 
 class DayView(context: Context,
@@ -77,6 +78,12 @@ class DayView(context: Context,
             tvBurmeseDay.setTextColor(Color.RED)
             tvWesternDay.setTextColor(Color.RED)
         }
+
+        if (calendarDay.getDate() == LocalDate.now()) {
+            tvWesternDay.setTextColor(Color.WHITE)
+            tvWesternDay.background = generateCircleDrawable(Color.BLUE)
+        }
+
 
     }
 

@@ -4,7 +4,7 @@
     android:layout_height="@dimen/_40sdp"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/colorWhite"
+    android:background="@color/colorBlue"
     android:padding="@dimen/_5sdp">
 
     <TextView
@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:gravity="end"
+        android:textColor="@color/colorWhite"
         tools:text="Title One"
         android:textStyle="bold"/>
 
@@ -23,7 +24,16 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/tvTitleOne"
         tools:text="Title Two"
+        android:textColor="@color/colorWhite"
         android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvTitleThree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="DECEMBER\n2019"
+        android:textStyle="bold"
+        android:textColor="@color/colorWhite"/>
 
 
 </RelativeLayout>

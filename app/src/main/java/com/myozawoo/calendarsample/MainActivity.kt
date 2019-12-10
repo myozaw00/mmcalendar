@@ -20,6 +20,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        parentLayout.addView(SingleMonthView(this, CalendarDay.from(2019,11,1)))
+        parentLayout.addView(SingleMonthView(this, CalendarDay.from(2019,12,1)))
     }
 }
