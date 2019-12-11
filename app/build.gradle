@@ -11,13 +11,28 @@ android {
         applicationId "com.myozawoo.calendarsample"
         minSdkVersion 22
         targetSdkVersion 29
-        versionCode 1
+        versionCode 6
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        release {
+            storeFile file('../keystore/release.jks')
+            keyAlias 'release'
+            keyPassword 'c@l@nder'
+            storePassword 'c@l@nder'
+            v2SigningEnabled true
+        }
+    }
+
+
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -33,4 +48,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation project(path: ':mmcalendar')
+    implementation 'com.google.android.gms:play-services-ads:18.3.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }

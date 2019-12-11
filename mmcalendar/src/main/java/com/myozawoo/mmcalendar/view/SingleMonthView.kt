@@ -1,6 +1,7 @@
 package com.myozawoo.mmcalendar.view
 
 import android.content.Context
+import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.util.rangeTo
@@ -9,12 +10,23 @@ import com.myozawoo.mmcalendar.R
 import kotlinx.android.synthetic.main.item_month_header.view.*
 import mmcalendar.MyanmarDateConverter
 
-class SingleMonthView (context: Context,
-                       private var month: CalendarDay): LinearLayout(context) {
+class SingleMonthView: LinearLayout {
+
+    constructor(context: Context): super(context)
+
+    constructor(context: Context, attrs: AttributeSet): super(context, attrs)
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr)
 
     init {
-        rootView.layoutParams = LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+
+        rootView.layoutParams = LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         orientation = LinearLayout.VERTICAL
+
+    }
+
+    fun setDate(year: Int, month: Int, day: Int) {
+        val month = CalendarDay(year,month,day)
         val startDate = CalendarDay.from(month.getYear(),month.getDate().monthValue,1)
         val endDate = CalendarDay.from(month.getYear(), month.getDate().monthValue, month.getDate().month.maxLength())
         val tmpBurmeseMonth = arrayListOf<String>()

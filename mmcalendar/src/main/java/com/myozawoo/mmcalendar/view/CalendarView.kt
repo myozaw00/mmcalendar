@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import androidx.core.view.children
 import com.myozawoo.mmcalendar.R
 import com.myozawoo.mmcalendar.format.WeekDayFormatter
 import com.myozawoo.mmcalendar.format.DateFormatDayFormatter
@@ -130,7 +131,6 @@ abstract class CalendarView(context: Context,
     private fun updateUi() {
         dayViews.forEach {
             val day = it.getDate()
-            showLog("isInRange: ${day.isInRange(minDate, maxDate)}")
             it.setupSelection(day.isInRange(minDate, maxDate), isDayEnabled(day))
         }
         postInvalidate()
@@ -199,7 +199,11 @@ abstract class CalendarView(context: Context,
         }
 
         val measureTileWidth = specWidthSize / DEFAULT_DAYS_IN_WEEK
-        val measureTileHeight = (specHeightSize/2) /getRows()
+        val measureTileHeight = specHeightSize/getRows()
+        showLog("Row: ${getRows()}")
+        showLog("MeasureTileHeight: $measureTileHeight")
+        showLog("Height: $specHeightSize")
+        val desireHeight = suggestedMinimumHeight+paddingTop+paddingBottom
         setMeasuredDimension(specWidthSize, specHeightSize)
         val count = childCount
         for (i in 0 until count) {
@@ -208,6 +212,7 @@ abstract class CalendarView(context: Context,
             val childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(measureTileHeight, MeasureSpec.EXACTLY)
             child.measure(childWidthMeasureSpec, childHeightMeasureSpec)
         }
+
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {

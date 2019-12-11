@@ -165,9 +165,6 @@ class DayView(context: Context,
         if (!isInRange && showOutOfRange) {
             shouldBeVisible = shouldBeVisible or isInMoth
         }
-        showLog("ShouldBeVisible: $shouldBeVisible")
-        showLog("Not in Month ${getLabel().toString()}")
-        showLog("IsInMonth: $isInMoth")
         if (!isInMoth) {
             tvMoonphase.setTextColor(Color.GRAY)
             tvBurmeseDay.setTextColor(Color.GRAY)
@@ -227,11 +224,12 @@ class DayView(context: Context,
         val radius = Math.min(height, width)
         val offset = Math.abs(height - width)/2
         val circleOffset = offset
+        showLog("Width: $width Height: $height")
         if (width >= height) {
             tempRect.set(offset, 0, radius+offset, height)
             circleDrawableRect.set(circleOffset, 0, radius+circleOffset, height)
         }else {
-            tempRect.set(0, -1, width, radius+offset)
+            tempRect.set(0, 0, width, height)
             circleDrawableRect.set(0, circleOffset, width, radius + circleOffset)
         }
     }
