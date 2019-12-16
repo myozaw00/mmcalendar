@@ -9,6 +9,7 @@ import com.myozawoo.mmcalendar.CalendarDay
 import com.myozawoo.mmcalendar.R
 import kotlinx.android.synthetic.main.item_month_header.view.*
 import mmcalendar.MyanmarDateConverter
+import java.lang.StringBuilder
 
 class SingleMonthView: LinearLayout {
 
@@ -36,12 +37,13 @@ class SingleMonthView: LinearLayout {
                 tmpBurmeseMonth.add(mmDate.monthName)
             }
         }
-        val currentMonths = tmpBurmeseMonth.distinct()
+        val currentMonths = tmpBurmeseMonth.distinct().joinToString(separator = " - ")
         val headerView = View.inflate(context, R.layout.item_month_header, null)
         val myanmarDate = MyanmarDateConverter.convert(month.getYear(), month.getMonth(), 1)
         headerView.tvTitleTwo.text = "သာသနာနှစ် ${myanmarDate.buddhistEra} မြန်မာနှစ် ${myanmarDate.year}"
 //        headerView.tvTitleTwo.text = "${myanmarDate.monthName} ${month.getDate().month.name} ${month.getYear()}"
-        headerView.tvTitleOne.text = "${currentMonths[0]} - ${currentMonths[1]}"
+//        headerView.tvTitleOne.text = "${currentMonths[0]} - ${currentMonths[1]}"
+        headerView.tvTitleOne.text = currentMonths
         headerView.tvTitleThree.text = "${month.getDate().month.name}\n${month.getYear()}"
         addView(headerView)
         val monthView = MonthView(context, month)

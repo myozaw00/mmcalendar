@@ -37,7 +37,7 @@ class HomeActivity : AppCompatActivity() {
             }else{
                 showToast("AD wasn't loaded yet.")
             }
-        }, 10000)
+        }, 15000)
     }
 
     private fun showToast(message: String) {

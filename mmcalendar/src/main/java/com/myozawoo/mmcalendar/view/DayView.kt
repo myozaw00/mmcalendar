@@ -81,7 +81,7 @@ class DayView(context: Context,
 
         if (calendarDay.getDate() == LocalDate.now()) {
             tvWesternDay.setTextColor(Color.WHITE)
-            tvWesternDay.background = generateCircleDrawable(Color.BLUE)
+            tvWesternDay.background = generateCircleDrawable(Color.parseColor("#154FCD"))
         }
 
 
