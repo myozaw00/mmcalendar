@@ -37,7 +37,7 @@ class HomeActivity : AppCompatActivity() {
             }else{
                 showToast("AD wasn't loaded yet.")
             }
-        }, 15000)
+        }, 10000)
     }
 
     private fun showToast(message: String) {
@@ -60,5 +60,10 @@ class HomeActivity : AppCompatActivity() {
         list.add(Date(2020,11,1))
         list.add(Date(2020,12,1))
         return list
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 }
