@@ -2,6 +2,7 @@ package com.myozawoo.mmcalendar.view
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.view.View
 import android.view.ViewGroup
 import com.myozawoo.mmcalendar.CalendarDay
@@ -14,6 +15,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import com.myozawoo.mmcalendar.R
 import com.myozawoo.mmcalendar.format.WeekDayFormatter
@@ -46,8 +48,15 @@ abstract class CalendarView(context: Context,
         var local = calendar
         for (i in 0 until DEFAULT_DAYS_IN_WEEK) {
             val weekDayView = WeekDayView(context, local.dayOfWeek)
+            if (i == 0 || i == 6) {
+                weekDayView.setTextColor(Color.RED)
+            }else {
+                weekDayView.setTextColor(Color.BLACK)
+            }
+            weekDayView.background = ContextCompat.getDrawable(context, R.drawable.bg_week_view)
+            weekDayView.setTypeface(null, Typeface.BOLD)
             weekDayView.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
-            weekDayView.setBackgroundColor(Color.parseColor("#154FCD"))
+//            weekDayView.setBackgroundColor(Color.parseColor("#154FCD"))
             weekDayViews.add(weekDayView)
             addView(weekDayView)
             local = local.plusDays(1)

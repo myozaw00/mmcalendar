@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Rect
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.StateListDrawable
@@ -186,6 +187,7 @@ class DayView(context: Context,
             tvBurmeseDay.setTextColor(Color.GRAY)
             tvWesternDay.setTextColor(Color.GRAY)
             tvPublicHoliday.setTextColor(Color.GRAY)
+            tvWesternDay.typeface = Typeface.DEFAULT
 //            tvMoonphase.setTextColor(tvMoonphase.textColors.getColorForState(
 //                intArrayOf(android.R.attr.state_enabled), Color.GRAY
 //            ))
