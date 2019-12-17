@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import com.myozawoo.mmcalendar.R
 import com.myozawoo.mmcalendar.format.DateFormatDayFormatter
 import com.myozawoo.mmcalendar.format.DayInfo
+import com.myozawoo.mmcalendar.utils.DayUtils
 import kotlinx.android.synthetic.main.item_day_view.view.*
 import org.threeten.bp.LocalDate
 
@@ -72,7 +73,7 @@ class DayView(context: Context,
         gravity = Gravity.CENTER
         textAlignment = View.TEXT_ALIGNMENT_CENTER
         setDay(date)
-        setText(getLabel())
+//        setText(getLabel())
         if (isHoliday) {
             tvMoonphase.setTextColor(Color.RED)
             tvBurmeseDay.setTextColor(Color.RED)
@@ -85,18 +86,33 @@ class DayView(context: Context,
         }
 
 
+
     }
 
     private fun setText(dayInfo: DayInfo) {
-        tvBurmeseDay.text = dayInfo.burmeseDay
-        tvMoonphase.text = dayInfo.moonPhase
-        tvWesternDay.text = dayInfo.westernDay
+
     }
 
 
     fun setDay(date: CalendarDay) {
         this.date = date
-        setText(getLabel())
+        val dayInfo = formatter.format(this.date)
+        tvBurmeseDay.text = dayInfo.burmeseDay
+        tvMoonphase.text = dayInfo.moonPhase
+        tvWesternDay.text = dayInfo.westernDay
+
+        if (DayUtils.getPublicHoliday(date.getYear(), date.getMonth(), date.getDay()) != "") {
+            tvMoonphase.setTextColor(Color.RED)
+            tvBurmeseDay.setTextColor(Color.RED)
+            tvWesternDay.setTextColor(Color.RED)
+            tvPublicHoliday.setTextColor(Color.RED)
+            if (dayInfo.moonPhase == "") {
+                tvMoonphase.text = DayUtils.getPublicHoliday(date.getYear(), date.getMonth(), date.getDay())
+            }else {
+                tvPublicHoliday.text = DayUtils.getPublicHoliday(date.getYear(), date.getMonth(), date.getDay())
+            }
+
+        }
     }
 
     fun setDayFormatter(formatter: DateFormatDayFormatter) {
@@ -169,6 +185,7 @@ class DayView(context: Context,
             tvMoonphase.setTextColor(Color.GRAY)
             tvBurmeseDay.setTextColor(Color.GRAY)
             tvWesternDay.setTextColor(Color.GRAY)
+            tvPublicHoliday.setTextColor(Color.GRAY)
 //            tvMoonphase.setTextColor(tvMoonphase.textColors.getColorForState(
 //                intArrayOf(android.R.attr.state_enabled), Color.GRAY
 //            ))

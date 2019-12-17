@@ -2,12 +2,15 @@ package com.myozawoo.mmcalendar.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.util.rangeTo
 import com.myozawoo.mmcalendar.CalendarDay
 import com.myozawoo.mmcalendar.R
 import kotlinx.android.synthetic.main.item_month_header.view.*
+import mmcalendar.Language
+import mmcalendar.LanguageCatalog
 import mmcalendar.MyanmarDateConverter
 import java.lang.StringBuilder
 
@@ -27,6 +30,10 @@ class SingleMonthView: LinearLayout {
     }
 
     fun setDate(year: Int, month: Int, day: Int) {
+
+        val tmpMmDate = MyanmarDateConverter.convert(2020, 10, 31)
+        showLog(tmpMmDate.toString())
+
         val month = CalendarDay(year,month,day)
         val startDate = CalendarDay.from(month.getYear(),month.getDate().monthValue,1)
         val endDate = CalendarDay.from(month.getYear(), month.getDate().monthValue, month.getDate().month.maxLength())
@@ -50,5 +57,10 @@ class SingleMonthView: LinearLayout {
         monthView.setMinimumDate(startDate)
         monthView.setMaximumDate(endDate)
         addView(monthView)
+    }
+
+
+    private fun showLog(message: String) {
+        Log.d("SingleMonthView", message)
     }
 }

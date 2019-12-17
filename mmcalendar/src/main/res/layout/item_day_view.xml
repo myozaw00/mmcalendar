@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="@dimen/_2sdp">
@@ -9,8 +9,12 @@
     <TextView
         android:id="@+id/tvBurmeseDay"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tvPublicHoliday"
+        android:layout_alignBottom="@+id/tvWesternDay"
+        android:layout_alignTop="@+id/tvWesternDay"
+        android:gravity="center_vertical"
+        android:layout_alignParentStart="true"
         tools:text="၁"
         android:textColor="@color/colorBlue"
         android:textSize="@dimen/_12sdp"/>
@@ -20,10 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="12"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/tvPublicHoliday"
         android:layout_alignParentEnd="true"
-        android:textSize="@dimen/_15sdp"
-        android:padding="@dimen/_2sdp"
+        android:textSize="@dimen/_18sdp"
         android:textColor="@color/colorBlue"
         android:textStyle="bold"/>
 
@@ -34,8 +37,20 @@
         tools:text="နတ်တော်လပြည့်ကျေ"
         android:textColor="@color/colorRed"
         android:layout_marginTop="@dimen/_2sdp"
-        android:textSize="@dimen/_6sdp"
+        android:textSize="@dimen/_7sdp"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/tvPublicHoliday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="နတ်တော်လပြည့်ကျေ"
+        android:textColor="@color/colorRed"
+        android:textSize="@dimen/_7sdp"
+        android:gravity="center_horizontal"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/tvWesternDay"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        />
 
 </RelativeLayout>
