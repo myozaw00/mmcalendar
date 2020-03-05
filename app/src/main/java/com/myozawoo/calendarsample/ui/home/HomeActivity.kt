@@ -38,6 +38,8 @@ class HomeActivity : AppCompatActivity() {
                 showToast("AD wasn't loaded yet.")
             }
         }, 10000)
+
+
     }
 
     private fun showToast(message: String) {
@@ -46,7 +48,6 @@ class HomeActivity : AppCompatActivity() {
 
     private fun getList(): List<Date> {
         val list = arrayListOf<Date>()
-        list.add(Date(2019, 12, 1))
         list.add(Date(2020, 1, 1))
         list.add(Date(2020,2,1))
         list.add(Date(2020,3,1))

@@ -36,4 +36,5 @@ dependencies {
     implementation 'com.jakewharton.threetenabp:threetenabp:1.2.0'
     implementation files('src/main/assets/myanmar-calendar-1.0.6.RC3.jar')
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }

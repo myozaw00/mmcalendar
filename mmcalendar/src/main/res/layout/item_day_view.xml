@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="12"
-        android:layout_above="@+id/tvPublicHoliday"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:textSize="@dimen/_18sdp"
         android:textColor="@color/colorBlue"

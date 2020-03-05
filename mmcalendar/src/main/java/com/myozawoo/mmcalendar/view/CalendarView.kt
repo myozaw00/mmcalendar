@@ -15,8 +15,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import com.myozawoo.mmcalendar.DateListener
 import com.myozawoo.mmcalendar.R
 import com.myozawoo.mmcalendar.format.WeekDayFormatter
 import com.myozawoo.mmcalendar.format.DateFormatDayFormatter
@@ -24,7 +26,8 @@ import com.myozawoo.mmcalendar.format.DateFormatDayFormatter
 
 abstract class CalendarView(context: Context,
                             private val firstViewDay: CalendarDay,
-                            private val firstDayOfWeek: DayOfWeek) : ViewGroup(context),
+                            private val firstDayOfWeek: DayOfWeek,
+                            private val listener: DateListener) : ViewGroup(context),
     View.OnClickListener, View.OnLongClickListener{
 
     companion object {
@@ -42,6 +45,8 @@ abstract class CalendarView(context: Context,
     init {
         buildWeekDays(resetAndGetWorkingCalendar())
         buildDayViews(dayViews, resetAndGetWorkingCalendar())
+        setSelectionEnable(true)
+        //invalidateDecorators()
     }
 
     private fun buildWeekDays(calendar: LocalDate) {
@@ -54,7 +59,7 @@ abstract class CalendarView(context: Context,
                 weekDayView.setTextColor(Color.BLACK)
             }
             weekDayView.background = ContextCompat.getDrawable(context, R.drawable.bg_week_view)
-            weekDayView.setTypeface(null, Typeface.BOLD)
+//            weekDayView.setTypeface(null, Typeface.BOLD)
             weekDayView.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
 //            weekDayView.setBackgroundColor(Color.parseColor("#154FCD"))
             weekDayViews.add(weekDayView)
@@ -72,7 +77,7 @@ abstract class CalendarView(context: Context,
 
     fun addDayView(views: Collection<DayView>, temp: LocalDate, isHoliday: Boolean) {
         val day = CalendarDay.from(temp)
-        val dayView = DayView(context, day!!, isHoliday)
+        val dayView = DayView(context, day!!)
         dayView.setOnClickListener(this)
         dayView.setOnLongClickListener(this)
         dayViews.add(dayView)
@@ -132,7 +137,8 @@ abstract class CalendarView(context: Context,
 
     private fun setSelectedDates(dates: List<CalendarDay>) {
         dayViews.forEach {
-            //it.isChecked = dates.contains(it.getDate())
+            Log.i(javaClass.simpleName, dates.contains(it.getDate()).toString())
+            it.isChecked = dates.contains(it.getDate())
         }
         postInvalidate()
     }
@@ -180,6 +186,7 @@ abstract class CalendarView(context: Context,
 
     override fun onClick(v: View?) {
         if (v is DayView) {
+            listener.onDateClick(v.getDate())
             setSelectedDates(emptyList())
             setSelectedDates(listOf(v.getDate()))
         }

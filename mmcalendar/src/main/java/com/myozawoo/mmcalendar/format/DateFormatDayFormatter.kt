@@ -35,9 +35,13 @@ class DateFormatDayFormatter
          * 3 - La Kwel
          */
         val mmDate = MyanmarDateConverter.convert(day.getYear(), day.getMonth(), day.getDay())
-        val moonPhase = if (mmDate.fortnightDay == "၁" || mmDate.fortnightDay == "") {
-            "${mmDate.monthName}\n${mmDate.moonPhase}"
-        }else ""
+
+        val moonPhase = if (mmDate.fortnightDay == "၁" || mmDate.fortnightDay == "" ) {
+            mmDate.moonPhraseInt
+        }else -1
+//        val moonPhase = if (mmDate.fortnightDay == "၁" || mmDate.fortnightDay == "") {
+//            "${mmDate.monthName}\n${mmDate.moonPhase}"
+//        }else ""
 
         return DayInfo(moonPhase = moonPhase,
             burmeseDay = mmDate.fortnightDay,

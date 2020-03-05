@@ -51,7 +51,7 @@ object DayUtils {
                 }
             }
         }
-        return holiday
+        return ""
     }
 
     data class PublicHoliday(val month: Int,

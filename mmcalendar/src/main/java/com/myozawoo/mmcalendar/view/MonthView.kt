@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.view.View
 import com.myozawoo.mmcalendar.CalendarDay
+import com.myozawoo.mmcalendar.DateListener
 import com.myozawoo.mmcalendar.R
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
@@ -11,8 +12,9 @@ import org.threeten.bp.temporal.WeekFields
 import java.util.*
 
 class MonthView (context: Context,
-                 private var month: CalendarDay)
-    : CalendarView(context, month, WeekFields.of(Locale.getDefault()).firstDayOfWeek) {
+                 private var month: CalendarDay,
+                 private val listener: DateListener)
+    : CalendarView(context, month, DayOfWeek.of(7), listener) {
 
     override fun buildDayViews(dayViews: Collection<DayView>, calendar: LocalDate) {
         var temp = calendar

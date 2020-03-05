@@ -12,8 +12,9 @@ class WeekDayView (context: Context,
                    private var dayOfWeek: DayOfWeek) : AppCompatTextView(context) {
     private var formatter = WeekDayFormatter.DEFAULT
     init {
-        gravity = Gravity.CENTER
         textAlignment = View.TEXT_ALIGNMENT_CENTER
+        gravity = Gravity.END
+//        setPadding(0,0,50,0)
         setDayOfWeek(dayOfWeek)
         setTextColor(Color.WHITE)
     }
