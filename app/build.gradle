@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.myozawoo.calendarsample"
-        minSdkVersion 22
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 9
         versionName "1.0.2"
