@@ -1,6 +1,6 @@
 
 
-![screen](https://raw.githubusercontent.com/myozaw00/mmcalendar/development/images/screen_shot_03.png)
+![screen](https://raw.githubusercontent.com/myozaw00/mmcalendar/development/images/screen_shot_04.png)
 
 ## Usage
 
