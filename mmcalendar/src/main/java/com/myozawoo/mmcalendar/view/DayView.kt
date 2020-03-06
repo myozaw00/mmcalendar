@@ -28,7 +28,7 @@ class DayView(context: Context,
               calendarDay: CalendarDay) : AppCompatCheckedTextView(context) {
 
     private lateinit var date: CalendarDay
-    private var selectionColor = Color.parseColor("#80ff0000")
+    private var selectionColor = Color.parseColor("#800000FF")
 
     private val fadeTime: Int
     private var customBackground: Drawable? = null

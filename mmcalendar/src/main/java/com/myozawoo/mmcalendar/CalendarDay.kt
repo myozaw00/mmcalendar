@@ -83,7 +83,7 @@ class CalendarDay : Parcelable {
     }
 
     override fun toString(): String {
-        return "CalendarDay{${date.year}-${date.monthValue}-${date.dayOfMonth}}"
+        return "${date.year}-${date.monthValue}-${date.dayOfMonth}"
     }
 
 

@@ -103,7 +103,8 @@ class DatePickerDialogFragment(private val listener: DateListener) : DialogFragm
         tvOk.visibility = View.VISIBLE
         val mmDate = MyanmarDateConverter.convert(calendarDay.getYear(), calendarDay.getMonth(), calendarDay.getDay())
         val fortNightDay = if(mmDate.fortnightDayInt == 15) "" else "${mmDate.fortnightDay} ရက်"
-        tvResult.text = "${mmDate.year} ခုနှစ်၊ ${mmDate.monthName} ${mmDate.moonPhase} $fortNightDay"
+        tvResult.text = "${calendarDay.getDate().toString()}"+"\n${mmDate.year} ခုနှစ်၊ ${mmDate.monthName} ${mmDate.moonPhase} $fortNightDay"
+
     }
 
     private fun getYearList(): List<String> {
