@@ -29,7 +29,7 @@ class DayView(context: Context,
               private val isHoliday: Boolean) : AppCompatCheckedTextView(context) {
 
     private lateinit var date: CalendarDay
-    private var selectionColor = Color.parseColor("#800000FF")
+    private var selectionColor = Color.parseColor("#eaeaea")
 
     private val fadeTime: Int
     private var customBackground: Drawable? = null
@@ -78,7 +78,7 @@ class DayView(context: Context,
         fadeTime = resources.getInteger(android.R.integer.config_shortAnimTime)
 //        setTextColor(Color.DKGRAY)
 //        selectionDrawable = ContextCompat.getDrawable(context, R.drawable.bg_rounded_red)
-        setSelectionColor(Color.parseColor("#FF4954"))
+        setSelectionColor(Color.parseColor("#eaeaea"))
         setDay(calendarDay)
         textAlignment = View.TEXT_ALIGNMENT_CENTER
         gravity = Gravity.CENTER
@@ -153,7 +153,7 @@ class DayView(context: Context,
         )
 
         spannableString.setSpan(
-            RelativeSizeSpan(1.4f),
+            RelativeSizeSpan(1.2f),
             0, engDay.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 

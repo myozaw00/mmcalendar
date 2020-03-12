@@ -1,26 +1,31 @@
 package com.myozawoo.mmcalendar.picker
 
+import android.app.Dialog
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.fragment.app.DialogFragment
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.myozawoo.mmcalendar.CalendarDay
 import com.myozawoo.mmcalendar.DateListener
 import com.myozawoo.mmcalendar.R
 import kotlinx.android.synthetic.main.dialog_fragment_date_picker.*
 import mmcalendar.MyanmarDateConverter
-import mmcalendar.MyanmarDateKernel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DatePickerDialogFragment(private val listener: DateListener) : DialogFragment(),
+class DatePickerDialogFragment(private val listener: DateListener) : BottomSheetDialogFragment(),
     DateListener {
+
+    private val DEFAULT_MONTHS = listOf("JANUARY ပြာသို-တပို့တွဲ", "FEBRUARY တပို့တွဲ-တပေါင်း", "MARCH တပေါင်း-နှောင်းတန်ခူး", "APRIL နှောင်းတန်ခူး-တန်ခူး-ကဆုန်","MAY ကဆုန်-နယုန်",
+        "JUNE နယုန်-ပဝါဆို", "JULY ပဝါဆို-ဒုဝါဆို", "AUGUST ဒုဝါဆို-ဝါခေါင်", "SEPTEMBER ဝါခေါင်-တော်သလင်း", "OCTOBER တော်သလင်း-သီတင်းကျွတ်","NOVEMBER သီတင်းကျွတ်-တန်ဆောင်မုန်း",
+        "DECEMBER တန်ဆောင်မုန်း-နတ်တော်")
 
     private val yearList = listOf(
         "2020 ၁၃၈၁-၁၃၈၂",
@@ -136,23 +141,25 @@ class DatePickerDialogFragment(private val listener: DateListener) : DialogFragm
         return view
     }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
-//    }
+    override fun setupDialog(dialog: Dialog, style: Int) {
+        super.setupDialog(dialog, style)
+        val view = View.inflate(context, R.layout.dialog_fragment_date_picker, null)
+        dialog.setContentView(view)
+        val params = (view.parent as View).layoutParams as CoordinatorLayout.LayoutParams
+        val behavior = params.behavior
+        if (behavior != null && behavior is BottomSheetBehavior) {
+            behavior.setBottomSheetCallback(mBottomSheetBehaviorCallback)
+            behavior.peekHeight = 2000
+        }
 
-    override fun onStart() {
-        super.onStart()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mSelectedDate = CalendarDay(2020, 1, 1)
         calendarView.setListener(this)
-
-        val yearAdapter =
-            SpinnerAdapter(context!!, false)
-
-        val monthAdapter = SpinnerAdapter(context!!, true)
-        spYear.adapter = yearAdapter
-        spMonth.adapter = monthAdapter
-        yearAdapter.setData(yearList)
-        monthAdapter.setData(getMonthListYear(yearList[0].substring(0, 4).toInt()))
+        spYear.adapter = YearAdapter(context!!, yearList)
+        spMonth.adapter = SpinnerAdapter(context!!, DEFAULT_MONTHS)
         spYear.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -164,9 +171,13 @@ class DatePickerDialogFragment(private val listener: DateListener) : DialogFragm
                 position: Int,
                 id: Long
             ) {
-                Log.d("DatePicker", "Position: $position")
-                monthAdapter.setData(getMonthListYear(yearList[position].substring(0, 4).toInt()))
-                spMonth.adapter = monthAdapter
+                if (yearList[position].substring(0, 4).toInt() == 2020) {
+                    spMonth.adapter = SpinnerAdapter(context!!, DEFAULT_MONTHS)
+                }else {
+                    spMonth.adapter = SpinnerAdapter(context!!, getMonthListYear(
+                        yearList[position].substring(0, 4).toInt()
+                    ))
+                }
             }
         }
 
@@ -196,7 +207,7 @@ class DatePickerDialogFragment(private val listener: DateListener) : DialogFragm
                 val fortNightDay =
                     if (mmDate.fortnightDayInt == 15) "" else "${mmDate.fortnightDay} ရက်"
                 tvBurmeseDate.text =
-                    "${mmDate.year} ခုနှစ်၊ ${mmDate.monthName} ${mmDate.moonPhase} $fortNightDay"
+                    "${mmDate.year} ခုနှစ်၊ ${mmDate.monthName} ${mmDate.moonPhase} $fortNightDay၊ ${mmDate.weekDay}"
                 tvEngDate.text = convertDateFormat(calendarDay.getDate().toString())
 
 
@@ -209,12 +220,6 @@ class DatePickerDialogFragment(private val listener: DateListener) : DialogFragm
             listener.onDateClick(mSelectedDate!!)
             dismiss()
         }
-
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDateClick(calendarDay: CalendarDay) {
@@ -226,7 +231,7 @@ class DatePickerDialogFragment(private val listener: DateListener) : DialogFragm
         )
         val fortNightDay = if (mmDate.fortnightDayInt == 15) "" else "${mmDate.fortnightDay} ရက်"
         tvBurmeseDate.text =
-            "${mmDate.year} ခုနှစ်၊ ${mmDate.monthName} ${mmDate.moonPhase} $fortNightDay"
+            "${mmDate.year} ခုနှစ်၊ ${mmDate.monthName} ${mmDate.moonPhase} $fortNightDay၊ ${mmDate.weekDay}"
         tvEngDate.text = convertDateFormat(calendarDay.getDate().toString())
 
     }
@@ -254,8 +259,10 @@ class DatePickerDialogFragment(private val listener: DateListener) : DialogFragm
     }
 
     private fun getMonthListYear(year: Int): List<String> {
-        val monthList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
         val months = arrayListOf<String>()
+
+        val monthList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+
         monthList.forEach { month ->
 
             val engDate = CalendarDay(year, month, 1)
@@ -273,11 +280,15 @@ class DatePickerDialogFragment(private val listener: DateListener) : DialogFragm
                 }
             }
 
-//            Log.i(javaClass.simpleName, "${engDate.getDate().month.name.substring(0,3)} (${tmpBurmeseMonth.distinct().joinToString(separator = "-")})")
             months.add(
-                "${engDate.getDate().month.name} ${tmpBurmeseMonth.distinct().joinToString(separator = "-")}"
+                "${engDate.getDate().month.name} ${tmpBurmeseMonth.distinct()
+                    .joinToString(separator = "-")}"
             )
+
+
+
         }
+
         return months
     }
 
@@ -286,6 +297,18 @@ class DatePickerDialogFragment(private val listener: DateListener) : DialogFragm
         val dateFormat = "yyyy-MM-dd"
         val sdf = SimpleDateFormat(dateFormat, Locale.getDefault())
         val date = sdf.parse(date)
-        return SimpleDateFormat("yyyy, MMMM dd", Locale.getDefault()).format(date)
+        return SimpleDateFormat("yyyy, MMMM dd EEEE", Locale.getDefault()).format(date)
+    }
+
+    private val mBottomSheetBehaviorCallback = object : BottomSheetBehavior.BottomSheetCallback() {
+        override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+        }
+
+        override fun onStateChanged(bottomSheet: View, newState: Int) {
+            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+//                dismiss()
+            }
+        }
     }
 }

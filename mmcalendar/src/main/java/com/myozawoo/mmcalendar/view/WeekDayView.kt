@@ -30,7 +30,7 @@ class WeekDayView (context: Context,
         val data = formatter.format(dayOfWeek)
         val spannableString = SpannableString(data)
         spannableString.setSpan(
-            RelativeSizeSpan(1f),
+            RelativeSizeSpan(0.9f),
             0, data.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
 

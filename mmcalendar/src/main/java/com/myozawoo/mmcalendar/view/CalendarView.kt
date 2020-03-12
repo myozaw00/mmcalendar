@@ -71,7 +71,7 @@ abstract class CalendarView(context: Context,
             addView(weekDayView)
             local = local.plusDays(1)
         }
-        setMinimumDate(firstViewDay)
+//        setMinimumDate(firstViewDay)
     }
 
     fun setDayViewDecorators(result: List<DecoratorResult>) {
@@ -86,7 +86,7 @@ abstract class CalendarView(context: Context,
         dayView.setOnClickListener(this)
         dayView.setOnLongClickListener(this)
         if(day.getDay() == 1) {
-            dayView.updateTextColor(true)
+//            dayView.updateTextColor(true)
             dayView.isChecked = true
         }
         dayViews.add(dayView)
@@ -149,7 +149,7 @@ abstract class CalendarView(context: Context,
         dayViews.forEach {
             Log.i(TAG, dates.contains(it.getDate()).toString())
             it.isChecked = dates.contains(it.getDate())
-            it.updateTextColor(dates.contains(it.getDate()))
+
         }
         postInvalidate()
     }

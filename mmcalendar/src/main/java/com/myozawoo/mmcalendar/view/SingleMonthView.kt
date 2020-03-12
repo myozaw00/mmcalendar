@@ -62,10 +62,10 @@ class SingleMonthView: LinearLayout {
             }
         }
         val currentMonths = tmpBurmeseMonth.distinct().joinToString(separator = " - ")
-        val headerView = View.inflate(context, R.layout.item_month_header, null)
-        val myanmarDate = MyanmarDateConverter.convert(month.getYear(), month.getMonth(), 1)
-        headerView.tvTitleTwo.text = "မြန်မာနှစ် ${tmpBurmeseYear.distinct().joinToString(separator = "-")}"
-        headerView.tvTitleOne.text = currentMonths
+//        val headerView = View.inflate(context, R.layout.item_month_header, null)
+//        val myanmarDate = MyanmarDateConverter.convert(month.getYear(), month.getMonth(), 1)
+//        headerView.tvTitleTwo.text = "မြန်မာနှစ် ${tmpBurmeseYear.distinct().joinToString(separator = "-")}"
+//        headerView.tvTitleOne.text = currentMonths
 
         //addView(headerView)
         val monthView = MonthView(context, month, listener)

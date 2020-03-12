@@ -17,16 +17,19 @@ class TestActivity : AppCompatActivity(), DateListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
 
-        val datePicker = DatePickerDialogFragment(this)
-        val ft = supportFragmentManager.beginTransaction()
-        val prev = supportFragmentManager.findFragmentByTag("dialog")
-        if (prev != null)
-        {
-            ft.remove(prev)
+        btnTest.setOnClickListener {
+            val datePicker = DatePickerDialogFragment(this)
+            val ft = supportFragmentManager.beginTransaction()
+            val prev = supportFragmentManager.findFragmentByTag("dialog")
+            if (prev != null)
+            {
+                ft.remove(prev)
+            }
+            ft.addToBackStack(null)
+            datePicker.show(supportFragmentManager, "dialog")
+
         }
-        ft.addToBackStack(null)
-        datePicker.isCancelable = true
-        datePicker.show(ft, "dialog")
+
 
     }
 
