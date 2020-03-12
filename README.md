@@ -33,7 +33,7 @@ allprojects {
 }
 
 dependencies {
-	implementation 'com.github.myozaw00:mmcalendar:1.1.2'
+	implementation 'com.github.myozaw00:mmcalendar:1.1.3'
 }
 ```
 
