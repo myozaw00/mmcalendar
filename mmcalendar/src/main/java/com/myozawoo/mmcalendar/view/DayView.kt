@@ -8,24 +8,25 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.StateListDrawable
 import android.graphics.drawable.shapes.OvalShape
-import android.graphics.drawable.shapes.RectShape
+import android.graphics.drawable.shapes.RoundRectShape
 import android.os.Build
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.widget.AppCompatCheckedTextView
-import androidx.core.content.ContextCompat
 import com.myozawoo.mmcalendar.CalendarDay
 import com.myozawoo.mmcalendar.R
 import com.myozawoo.mmcalendar.format.DayFormatter
 
 
 class DayView(context: Context,
-              calendarDay: CalendarDay) : AppCompatCheckedTextView(context) {
+              calendarDay: CalendarDay,
+              private val isHoliday: Boolean) : AppCompatCheckedTextView(context) {
 
     private lateinit var date: CalendarDay
     private var selectionColor = Color.parseColor("#800000FF")
@@ -45,7 +46,20 @@ class DayView(context: Context,
     companion object {
 
         private fun generateCircleDrawable(color: Int): Drawable {
-            val drawable = ShapeDrawable(RectShape())
+//            val drawable = ShapeDrawable(
+//                RoundRectShape(
+//                    floatArrayOf(
+//                        10f,
+//                        10f,
+//                        10f,
+//                        10f,
+//                        10f,
+//                        10f,
+//                        10f,
+//                        10f
+//                    ), null, null
+//                ))
+            val drawable = ShapeDrawable(OvalShape())
             drawable.paint.color = color
             return drawable
         }
@@ -63,11 +77,10 @@ class DayView(context: Context,
     init {
         fadeTime = resources.getInteger(android.R.integer.config_shortAnimTime)
 //        setTextColor(Color.DKGRAY)
+//        selectionDrawable = ContextCompat.getDrawable(context, R.drawable.bg_rounded_red)
+        setSelectionColor(Color.parseColor("#FF4954"))
         setDay(calendarDay)
-        setSelectionColor(this.selectionColor)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            textAlignment = View.TEXT_ALIGNMENT_CENTER;
-        }
+        textAlignment = View.TEXT_ALIGNMENT_CENTER
         gravity = Gravity.CENTER
         compoundDrawablePadding = -20
         setPadding(10,10,10,10)
@@ -84,16 +97,16 @@ class DayView(context: Context,
          */
         this.date = date
 
-        text = getSpannableLabel()
-        val moonPhaseResourceId = when(formatter.format(date).moonPhase) {
-            0 -> R.drawable.ic_la_san
-            1 -> R.drawable.ic_la_pyae
-            2 -> R.drawable.ic_la_sote
-            3 -> R.drawable.ic_la_kwel
-            else -> 0
-        }
-        setCompoundDrawablesWithIntrinsicBounds(moonPhaseResourceId,
-            0, 0, 0)
+        text = getSpannableLabel(formatter.format(date).moonPhase, true)
+//        val moonPhaseResourceId = when(formatter.format(date).moonPhase) {
+//            0 -> R.drawable.ic_la_san
+//            1 -> R.drawable.ic_la_pyae
+//            2 -> R.drawable.ic_la_sote
+//            3 -> R.drawable.ic_la_kwel
+//            else -> 0
+//        }
+//        setCompoundDrawablesWithIntrinsicBounds(moonPhaseResourceId,
+//            0, 0, 0)
     }
 
     fun setDayFormatter(formatter: DayFormatter) {
@@ -117,20 +130,51 @@ class DayView(context: Context,
         return "${formatter.format(date).burmeseDay}\n${formatter.format(date).westernDay}"
     }
 
-    fun getSpannableLabel(): SpannableString {
-        val mmDay = formatter.format(date).burmeseDay
+    fun getSpannableLabel(moonPhase: Int, isSelected: Boolean): SpannableString {
+        /**
+         * 0 - La San
+         * 1 - La Pyae
+         * 2 - La Sote
+         * 3 - La Kwel
+         */
+        val mmDay = if(moonPhase == 1 || moonPhase == 3){
+            if (moonPhase == 1) "ပြည့်"
+            else "ကွယ်"
+        }else {
+            formatter.format(date).burmeseDay
+        }
         val engDay = formatter.format(date).westernDay
-        val spannableString = SpannableString("$mmDay\n$engDay")
+        val spannableString = SpannableString("$engDay\n$mmDay")
         spannableString.setSpan(
-            ForegroundColorSpan(Color.LTGRAY),
-            0, mmDay.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            if (isSelected && !isHoliday) ForegroundColorSpan(Color.BLACK)
+            else if(isSelected && isHoliday) ForegroundColorSpan(Color.parseColor("#FC1D2A"))
+            else ForegroundColorSpan(Color.WHITE),
+            0, engDay.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
         spannableString.setSpan(
-            ForegroundColorSpan(Color.DKGRAY),
-            mmDay.length, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            RelativeSizeSpan(1.4f),
+            0, engDay.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        spannableString.setSpan(
+            if(isSelected) ForegroundColorSpan(Color.parseColor("#565656"))
+            else  ForegroundColorSpan(Color.WHITE),
+            engDay.length, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        spannableString.setSpan(
+            RelativeSizeSpan(0.8f),
+            engDay.length, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         return spannableString
+    }
+
+    fun updateTextColor(isSelected: Boolean) {
+        text = getSpannableLabel(
+            formatter.format(date).moonPhase,
+            !isSelected
+        )
     }
 
     fun getContentDescriptionLabel(): String {

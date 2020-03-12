@@ -8,13 +8,13 @@ class CalendarWeekDayFormatter : WeekDayFormatter {
 
     override fun format(dayOfWeek: DayOfWeek): CharSequence {
         return when(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())) {
-            "Sun" -> "Sun\n"+"နွေ"
-            "Mon" -> "Mon\n"+"လာ"
-            "Tue" -> "Tue\n"+"ဂါ"
-            "Wed" -> "Wed\n"+"ဟူး"
-            "Thu" -> "Thu\n"+"တေး"
-            "Fri" -> "Fri\n"+"သော"
-            "Sat" -> "Sat\n"+"နေ"
+            "Sun" -> "SUN\n"+"နွေ"
+            "Mon" -> "MON\n"+"လာ"
+            "Tue" -> "TUE\n"+"ဂါ"
+            "Wed" -> "WED\n"+"ဟူး"
+            "Thu" -> "THU\n"+"တေး"
+            "Fri" -> "FRI\n"+"သော"
+            "Sat" -> "SAT\n"+"နေ"
             else -> ""
         }
     }

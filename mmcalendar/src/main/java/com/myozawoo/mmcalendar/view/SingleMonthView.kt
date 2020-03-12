@@ -36,16 +36,17 @@ class SingleMonthView: LinearLayout {
     fun setListener(listener: DateListener) {
         this.listener = listener
     }
-    fun setDate(year: Int, month: Int, day: Int) {
+
+    fun setDate(calendarDay: CalendarDay) {
 
 //        val tmpMmDate = MyanmarDateConverter.convert(2020, 10, 31)
 //        showLog(tmpMmDate.toString())
 
         removeAllViews()
 //
-        val month = CalendarDay(year,month,day)
+        val month = calendarDay
         val startDate = CalendarDay.from(month.getYear(),month.getDate().monthValue,1)
-        val maxDate = if (year%4 != 0 && month.getMonth() == 2) {
+        val maxDate = if (calendarDay.getYear()%4 != 0 && month.getMonth() == 2) {
             28
         }else {
             month.getDate().month.maxLength()
@@ -68,8 +69,7 @@ class SingleMonthView: LinearLayout {
 
         //addView(headerView)
         val monthView = MonthView(context, month, listener)
-        monthView.setMinimumDate(startDate)
-        monthView.setMaximumDate(endDate)
+        //monthView.setMaximumDate(endDate)
         addView(monthView)
     }
 

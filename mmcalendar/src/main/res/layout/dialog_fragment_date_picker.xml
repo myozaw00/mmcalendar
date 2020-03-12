@@ -18,20 +18,16 @@
         <Spinner
             android:id="@+id/spYear"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
             android:layout_marginEnd="@dimen/_5sdp"/>
 
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="48dp"
-            android:background="#c9c9c9"/>
 
         <Spinner
             android:id="@+id/spMonth"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
             android:layout_marginStart="@dimen/_5sdp"/>
 
     </LinearLayout>
@@ -41,20 +37,6 @@
         android:layout_height="0.5dp"
         android:background="#c9c9c9"/>
 
-    <TextView
-        android:id="@+id/tvResult"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingBottom="@dimen/_5sdp"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
-        android:text="hello"
-        android:gravity="end"
-        android:background="#AAc9c9c9"
-        android:textColor="#000000"
-        android:visibility="gone"
-        tools:visibility="visible"/>
 
 
     <com.myozawoo.mmcalendar.view.SingleMonthView
@@ -62,7 +44,28 @@
         android:layout_width="match_parent"
         android:layout_height="400dp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#c9c9c9"/>
 
+    <TextView
+        android:id="@+id/tvEngDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2020, January 09"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"/>
+
+    <TextView
+        android:id="@+id/tvBurmeseDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" ၁၃၈၁ ခုနှစ်၊ ပြာသို လပြည့်၊ ကြာသာပတေးနေ့"
+        android:textColor="#000000"
+        android:layout_marginStart="@dimen/_10sdp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -75,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_margin="@dimen/_10sdp"
             android:text="Cancel"/>
 
         <TextView
@@ -87,7 +90,11 @@
             android:paddingStart="@dimen/_20sdp"
             android:paddingEnd="@dimen/_20sdp"
             android:text="Ok"
-            android:visibility="gone"/>
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/bg_rounded_grey"
+            android:textColor="#000000"
+            android:layout_margin="@dimen/_10sdp"/>
 
     </LinearLayout>
 

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.myozawoo.calendarsample.R
+import com.myozawoo.mmcalendar.CalendarDay
 import kotlinx.android.synthetic.main.item_month_view.view.*
 
 class CalendarViewPagerAdapter (private val context: Context,
@@ -14,7 +15,7 @@ class CalendarViewPagerAdapter (private val context: Context,
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val view = LayoutInflater.from(context).inflate(R.layout.item_month_view, null)
         val date = list[position]
-        view.calendarView.setDate(date.year, date.month, date.day)
+        view.calendarView.setDate(CalendarDay(date.year, date.month, date.day))
         container.addView(view)
         return view
     }

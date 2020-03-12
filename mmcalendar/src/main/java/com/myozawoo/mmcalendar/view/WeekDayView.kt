@@ -2,6 +2,9 @@ package com.myozawoo.mmcalendar.view
 
 import android.content.Context
 import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.RelativeSizeSpan
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
@@ -13,7 +16,6 @@ class WeekDayView (context: Context,
     private var formatter = WeekDayFormatter.DEFAULT
     init {
         textAlignment = View.TEXT_ALIGNMENT_CENTER
-        gravity = Gravity.END
 //        setPadding(0,0,50,0)
         setDayOfWeek(dayOfWeek)
         setTextColor(Color.WHITE)
@@ -25,7 +27,15 @@ class WeekDayView (context: Context,
 
     fun setDayOfWeek(dayOfWeek: DayOfWeek) {
         this.dayOfWeek = dayOfWeek
-        text = formatter.format(dayOfWeek)
+        val data = formatter.format(dayOfWeek)
+        val spannableString = SpannableString(data)
+        spannableString.setSpan(
+            RelativeSizeSpan(1f),
+            0, data.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+
+
+        text = spannableString
     }
 
 }

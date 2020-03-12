@@ -22,6 +22,8 @@ import com.myozawoo.mmcalendar.DateListener
 import com.myozawoo.mmcalendar.R
 import com.myozawoo.mmcalendar.format.WeekDayFormatter
 import com.myozawoo.mmcalendar.format.DateFormatDayFormatter
+import kotlinx.android.synthetic.main.dialog_fragment_date_picker.view.*
+import kotlinx.android.synthetic.main.item_day_view.view.*
 
 
 abstract class CalendarView(context: Context,
@@ -30,6 +32,7 @@ abstract class CalendarView(context: Context,
                             private val listener: DateListener) : ViewGroup(context),
     View.OnClickListener, View.OnLongClickListener{
 
+    val TAG = "CalendarView"
     companion object {
         val DEFAULT_DAYS_IN_WEEK = 7
         val DEFAULT_MAX_WEEK = 6
@@ -45,7 +48,9 @@ abstract class CalendarView(context: Context,
     init {
         buildWeekDays(resetAndGetWorkingCalendar())
         buildDayViews(dayViews, resetAndGetWorkingCalendar())
+        Log.d(TAG, firstViewDay.getDate().toString())
         setSelectionEnable(true)
+        setMinimumDate(firstViewDay)
         //invalidateDecorators()
     }
 
@@ -54,7 +59,7 @@ abstract class CalendarView(context: Context,
         for (i in 0 until DEFAULT_DAYS_IN_WEEK) {
             val weekDayView = WeekDayView(context, local.dayOfWeek)
             if (i == 0 || i == 6) {
-                weekDayView.setTextColor(Color.RED)
+                weekDayView.setTextColor(Color.parseColor("#FC1D2A"))
             }else {
                 weekDayView.setTextColor(Color.BLACK)
             }
@@ -66,7 +71,7 @@ abstract class CalendarView(context: Context,
             addView(weekDayView)
             local = local.plusDays(1)
         }
-        //setMinimumDate(firstViewDay)
+        setMinimumDate(firstViewDay)
     }
 
     fun setDayViewDecorators(result: List<DecoratorResult>) {
@@ -77,9 +82,13 @@ abstract class CalendarView(context: Context,
 
     fun addDayView(views: Collection<DayView>, temp: LocalDate, isHoliday: Boolean) {
         val day = CalendarDay.from(temp)
-        val dayView = DayView(context, day!!)
+        val dayView = DayView(context, day!!, isHoliday)
         dayView.setOnClickListener(this)
         dayView.setOnLongClickListener(this)
+        if(day.getDay() == 1) {
+            dayView.updateTextColor(true)
+            dayView.isChecked = true
+        }
         dayViews.add(dayView)
         addView(dayView, LayoutParams())
     }
@@ -135,10 +144,12 @@ abstract class CalendarView(context: Context,
         updateUi()
     }
 
+
     private fun setSelectedDates(dates: List<CalendarDay>) {
         dayViews.forEach {
-            Log.i(javaClass.simpleName, dates.contains(it.getDate()).toString())
+            Log.i(TAG, dates.contains(it.getDate()).toString())
             it.isChecked = dates.contains(it.getDate())
+            it.updateTextColor(dates.contains(it.getDate()))
         }
         postInvalidate()
     }
