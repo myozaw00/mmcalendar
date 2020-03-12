@@ -1,6 +1,6 @@
 
 
-![screen](https://raw.githubusercontent.com/myozaw00/mmcalendar/development/images/screen_shot_04.png)
+![screen](https://raw.githubusercontent.com/myozaw00/mmcalendar/development/images/screen_shot_05.png)
 
 ## Usage
 
@@ -33,7 +33,7 @@ allprojects {
 }
 
 dependencies {
-	implementation 'com.github.myozaw00:mmcalendar:1.1.3'
+	implementation 'com.github.myozaw00:mmcalendar:1.1.4'
 }
 ```
 
