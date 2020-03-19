@@ -227,9 +227,6 @@ abstract class CalendarView(context: Context,
 
         val measureTileWidth = specWidthSize / DEFAULT_DAYS_IN_WEEK
         val measureTileHeight = specHeightSize/getRows()
-        showLog("Row: ${getRows()}")
-        showLog("MeasureTileHeight: $measureTileHeight")
-        showLog("Height: $specHeightSize")
         val desireHeight = suggestedMinimumHeight+paddingTop+paddingBottom
         setMeasuredDimension(specWidthSize, specHeightSize)
         val count = childCount

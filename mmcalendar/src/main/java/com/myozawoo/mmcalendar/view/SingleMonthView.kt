@@ -68,8 +68,10 @@ class SingleMonthView: LinearLayout {
 //        headerView.tvTitleOne.text = currentMonths
 
         //addView(headerView)
+        showLog(endDate.toString())
         val monthView = MonthView(context, month, listener)
-        //monthView.setMaximumDate(endDate)
+        monthView.setMinimumDate(startDate)
+        monthView.setMaximumDate(endDate)
         addView(monthView)
     }
 

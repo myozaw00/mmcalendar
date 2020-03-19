@@ -31,7 +31,7 @@ class MonthView (context: Context,
     }
 
     override fun getRows(): Int {
-        return DEFAULT_MAX_WEEK
+        return DEFAULT_MAX_WEEK + DAY_NAMES_ROW
     }
 
     fun getMonth(): CalendarDay {
