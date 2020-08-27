@@ -200,6 +200,7 @@ class DatePickerDialogFragment(private val listener: DateListener) : BottomSheet
                     month,
                     1
                 )
+                mSelectedDate = calendarDay
                 calendarView.setDate(
                     calendarDay
                 )
