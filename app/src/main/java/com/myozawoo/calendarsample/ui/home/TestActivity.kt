@@ -10,6 +10,7 @@ import com.myozawoo.mmcalendar.DateListener
 import com.myozawoo.mmcalendar.picker.DatePickerDialogFragment
 import kotlinx.android.synthetic.main.activity_test.*
 import kotlinx.android.synthetic.main.item_month_view.*
+import java.util.*
 
 class TestActivity : AppCompatActivity(), DateListener {
 
@@ -18,7 +19,11 @@ class TestActivity : AppCompatActivity(), DateListener {
         setContentView(R.layout.activity_test)
 
         btnTest.setOnClickListener {
-            val datePicker = DatePickerDialogFragment(this)
+            val fromDate = Calendar.getInstance()
+            fromDate.set(1900, 0, 1)
+            val toDate = Calendar.getInstance()
+            toDate.set(1900, 0, 1)
+            val datePicker = DatePickerDialogFragment(this, fromDate, toDate)
             val ft = supportFragmentManager.beginTransaction()
             val prev = supportFragmentManager.findFragmentByTag("dialog")
             if (prev != null)

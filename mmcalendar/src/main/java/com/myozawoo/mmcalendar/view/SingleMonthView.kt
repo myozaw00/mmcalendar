@@ -46,10 +46,19 @@ class SingleMonthView: LinearLayout {
 //
         val month = calendarDay
         val startDate = CalendarDay.from(month.getYear(),month.getDate().monthValue,1)
-        val maxDate = if (calendarDay.getYear()%4 != 0 && month.getMonth() == 2) {
+        val maxDate = if (month.getYear() % 400 == 0 && month.getMonth() == 2) {
+            29
+        } else if(month.getYear() % 100 == 0 && month.getMonth() == 2) {
             28
-        }else {
-            month.getDate().month.maxLength()
+        }else if(month.getYear() % 4 == 0 && month.getMonth() == 2) {
+            29
+        } else {
+            if (month.getMonth() == 2) {
+                28
+            }else {
+                month.getDate().month.maxLength()
+            }
+
         }
         val endDate = CalendarDay.from(month.getYear(), month.getDate().monthValue, maxDate)
         val tmpBurmeseMonth = arrayListOf<String>()
