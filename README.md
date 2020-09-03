@@ -7,6 +7,11 @@
 `DatePickerDialogFragment`extends `DialogFragment`, for example:
 
 ```
+val fromDate = Calendar.getInstance()
+fromDate.set(1950, 0, 1)
+val toDate = Calendar.getInstance()
+toDate.set(2030, 0, 1)
+
 val datePicker = DatePickerDialogFragment(this)
 val ft = supportFragmentManager.beginTransaction()
 val prev = supportFragmentManager.findFragmentByTag("dialog")
@@ -33,7 +38,7 @@ allprojects {
 }
 
 dependencies {
-	implementation 'com.github.myozaw00:mmcalendar:1.1.5'
+	implementation 'com.github.myozaw00:mmcalendar:1.2.0'
 }
 ```
 
